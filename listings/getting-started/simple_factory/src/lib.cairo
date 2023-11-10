@@ -1,4 +1,4 @@
-mod simple_factory;
+mod factory;
 mod target;
 
 #[cfg(test)]
