@@ -1,30 +1,30 @@
-mod tests {
-    use hash_solidity_compatible::{contract::{SolidityHashExample, ISolidityHashExample}};
-    use debug::PrintTrait;
+use hash_solidity_compatible::solidity_keccak::keccak_sol_256s;
 
-    use starknet::{
-        ContractAddress, get_contract_address, contract_address_const, call_contract_syscall,
-        testing::{set_contract_address}
-    };
+#[test]
+#[available_gas(99999999)]
+fn test_keccak_sol_u256() {
+    let input: Span<u256> = array![
+        0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    ].span();
 
-    fn setup() -> SolidityHashExample::ContractState {
-        let mut state = SolidityHashExample::contract_state_for_testing();
-        let contract_address = contract_address_const::<0x1>();
-        set_contract_address(contract_address);
-        state
-    }
+    let hashed = keccak_sol_256s(input);
 
-    #[test]
-    #[available_gas(2000000000)]
-    fn get_same_hash_solidity() {
-        let mut state = setup();
-        let mut array: Array<u256> = ArrayTrait::new();
-        array.append(1);
-
-        let hash_expected: u256 =
-            0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6;
-        let hash_received: u256 = state.hash_data(array.span());
-
-        assert(hash_received == hash_expected, 'hash_received != hash_expected');
-    }
+    assert(
+        hashed == 0xa9c584056064687e149968cbab758a3376d22aedc6a55823d1b3ecbee81b8fb9,
+        'keccak_sol_256s: wrong hash'
+    )
 }
+
+// #[test]
+// #[available_gas(99999999)]
+// fn test_keccak_sol_any() {
+//     let input: Span<u256> = array![0xAA].span();
+
+//     // Split the input in u64 chunks
+
+
+//     assert(
+//         compatible_hash == 0xdb81b4d58595fbbbb592d3661a34cdca14d7ab379441400cbfa1b78bc447c365,
+//         'wrong hash'
+//     )
+// }
