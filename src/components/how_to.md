@@ -45,4 +45,4 @@ The following contract incorporates the `Switchable` component:
 
 ## Deep dive into components
 
-You can find more in-depth information about components in the [Cairo book - Components](https://book.cairo-lang.org/ch99-01-05-00-components.html).
+You can find more in-depth information about components in the [Cairo book - Composability and Components](https://book.cairo-lang.org/ch16-02-00-composability-and-components.html).
